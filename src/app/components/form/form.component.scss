@@ -1,0 +1,86 @@
+.container {
+  width: 1140px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-application {
+  margin-top: 70px;
+  margin-bottom: 70px;
+}
+
+.form-control-name {
+  position: relative;
+  display: flex;
+  width: 380px;
+  justify-content: space-around;
+  margin-top: 25px;
+  margin-bottom: 15px;
+}
+
+.form-field {
+  flex: 1.5;
+}
+
+.title-form-control {
+  flex: 1;
+}
+
+.title-form {
+  text-align: center;
+}
+
+.divider {
+
+}
+
+.placeholder {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  height: 110%;
+  top: -10px;
+  align-items: center;
+  background: rgba(32, 30, 30, 0.9);
+
+  img {
+    width: 50px;
+  }
+}
+
+.h3-hobby{
+  text-align: center;
+}
+.form-field-hobby{
+  flex: 2;
+  margin-right: 10px;
+}
+.form-field-duration{
+  flex: 1;
+}
+.hobby-ol{
+  margin: 0;
+  padding: 0;
+}
+.hobby-container{
+  display: flex;
+}
+.form-control-name-hobby{
+  flex-direction: column;
+}
+.hobby-li{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+.add-hobby-btn{
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+.saveForm{
+  width: 100%;
+  margin-top: 25px;
+}

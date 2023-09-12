@@ -1,0 +1,122 @@
+<div class="container">
+  <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()" class="form-application">
+    <h1 class="title-form">Application form</h1>
+    <div class="divider">
+      <div class="form-control-name">
+        <h3 class="title-form-control"> First name</h3>
+        <mat-form-field class="form-field" color="accent" appearance="outline">
+          <mat-label>First name user</mat-label>
+          <input formControlName="firstName" matInput required>
+          <mat-error *ngIf="applicationForm.controls['firstName'].errors?.['required']">write your first name
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <mat-divider></mat-divider>
+    </div>
+    <div class="divider">
+      <div class="form-control-name">
+        <h3 class="title-form-control">Last name</h3>
+        <mat-form-field class="form-field" color="accent" appearance="outline">
+          <mat-label>Last name user</mat-label>
+          <input formControlName="lastName" matInput required>
+          <mat-error *ngIf="applicationForm.controls['lastName'].errors?.['required']">write your last name</mat-error>
+        </mat-form-field>
+      </div>
+      <mat-divider></mat-divider>
+    </div>
+    <div class="divider">
+      <div class="form-control-name">
+        <h3 class="title-form-control">Date of birth</h3>
+        <mat-form-field class="form-field" color="accent" appearance="outline">
+          <mat-label>Choose a date of birth</mat-label>
+          <input formControlName="dateOfBirth" matInput [matDatepicker]="picker" required>
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="applicationForm.controls['dateOfBirth'].errors?.['required']">write your date of birth
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <mat-divider class="mt"></mat-divider>
+    </div>
+    <div class="divider">
+      <div class="form-control-name">
+        <h3 class="title-form-control">Framework</h3>
+        <mat-form-field class="form-field" color="accent" appearance="outline">
+          <mat-label>Select technology</mat-label>
+          <mat-select [value]="'Angular'" formControlName="framework" required>
+            <mat-option>-- None --</mat-option>
+            <mat-option *ngFor="let technology of technologies" [value]=technology>{{technology|titlecase}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="applicationForm.controls['framework'].errors?.['required']">write your technology
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <mat-divider></mat-divider>
+    </div>
+    <div class="divider">
+      <div class="form-control-name">
+        <h3 class="title-form-control">Framework version</h3>
+        <mat-form-field class="form-field" color="accent" appearance="outline">
+          <mat-label>Select framework version</mat-label>
+          <mat-select required formControlName="frameworkVersion">
+            <mat-option *ngIf="!applicationForm.get('framework')?.value">-- write your technology  --</mat-option>
+            <mat-option *ngFor="let version of versions[applicationForm.get('framework')?.value]"
+                        [value]=version>{{version}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="applicationForm.controls['frameworkVersion'].errors?.['required']">write your versions
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <mat-divider></mat-divider>
+    </div>
+    <div class="divider">
+      <div class="form-control-name">
+        <h3 class="title-form-control">Email</h3>
+        <mat-form-field class="form-field" color="accent" appearance="outline">
+          <mat-label>Enter your email</mat-label>
+          <input (focusout)="onEmailInputFocus()" formControlName="email" placeholder="pat@example.com" matInput
+                 required>
+          <mat-error
+            *ngIf="applicationForm.controls['email'].status ==='INVALID'">{{getErrorMessageEmail()}}</mat-error>
+        </mat-form-field>
+        <div *ngIf="loaderEmail" class="placeholder">
+          <img src="assets/loader.gif" alt="loader">
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+    </div>
+    <div class="divider">
+      <h3 class="title-form-control h3-hobby">Hobby</h3>
+      <div class="form-control-name form-control-name-hobby ">
+      <ol formGroupName="hobbies" class="hobby-ol">
+        <li class="hobby-li" *ngFor="let hobby of  countControlsHobbies">
+          <div class="hobby-container">
+            <mat-form-field class="form-field form-field-hobby" color="accent" appearance="outline">
+              <mat-label>Enter your hobby</mat-label>
+              <input  [formControlName]="'hobby-' + hobby.id" matInput required>
+              <mat-error *ngIf="!this.applicationForm.controls['hobbies'].value['hobby-'+hobby.id]">write your hobby
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field form-field-duration" color="accent" appearance="outline">
+              <mat-label>Duration</mat-label>
+              <input [formControlName]="'duration-'+ hobby.id" matInput required>
+              <mat-error *ngIf="!this.applicationForm.controls['hobbies'].value['duration-'+hobby.id]">write your duration
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <button *ngIf="(hobby.id) !== 1" type="button"  (click)="deleteHobby(hobby.id)"  mat-stroked-button color="accent">Delete
+          </button>
+        </li>
+      </ol>
+        <button class="add-hobby-btn" [disabled]="applicationForm.controls['hobbies'].status ==='INVALID'" type="button" (click)="addHobby()" mat-stroked-button color="accent">Add hobby
+        </button>
+      </div>
+      <mat-divider></mat-divider>
+    </div>
+    <button class="saveForm"
+      type="submit" [disabled]="loaderEmail" mat-stroked-button color="accent">Save
+    </button>
+  </form>
+</div>
